@@ -26,7 +26,7 @@ automake libtool openssl tar perl binutils gcc g++ \
  mkdir build
   cd build
 
-        libs=( "libplist" "libusbmuxd" "usbmuxd" "libirecovery" \
+        libs=( "libusbmuxd" "usbmuxd" "libirecovery" \
                 "ideviceinstaller" "libideviceactivation" "ifuse" )
                  
                 for i in "${libs[@]}"
