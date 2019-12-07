@@ -112,7 +112,7 @@ echo -e "==> Grabbing dependencies and installing!"
 				make 
                                 sudo make install
 				cd ..
-                            cd libimobilevice
+                            cd libimobiledevice
                            git submodule init
                           git submodule update
                             
