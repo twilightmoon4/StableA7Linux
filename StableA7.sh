@@ -228,7 +228,7 @@ mkdir StableA7
 if [ -f restore.ipsw ]; then
 cp -r *.ipsw StableA7/restore.ipsw
 fi
-cp -r igetnonce StableA7/igetnonce
+cp -r bin StableA7/bin
 cd StableA7
 
 echo "==> Downloading patches..."
@@ -237,7 +237,7 @@ unzip -q patch.zip
 cp -r stablea7-master-patch/patch .
 rm -r stablea7-master-patch patch.zip
 
-./igetnonce
+./bin/igetnonce
 read -p "[+]Copy and paste idevice and press enter (ex:iPhone6,2): " identifier
             echo $identifier
 
@@ -336,9 +336,9 @@ mv ipwndfu_public ipwndfu
          sudo ip link set dev tap0 master virbr0	
          sudo virsh net-autostart default
        
-	irecovery -f ibss.patched.im4p
+	./bin/irecovery -f ibss.patched.im4p
         
-	irecovery -f ibec.patched.im4p
+	./bin/irecovery -f ibec.patched.im4p
 
 echo "==> Waiting iDevice..."
 sleep 10
@@ -347,7 +347,7 @@ wget -O manifests.zip https://gitlab.com/devluke/stablea7/raw/master/A7_10.3.3_O
 unzip -q manifests.zip
 rm manifests.zip
 	echo "==> Getting ECID and ApNonce..."
-        ./igetnonce
+        ./bin/igetnonce
 	read -p "[+]Copy and paste apnonce and press enter: " apnonce
             read -p "[+]Copy and paste ecid and press enter: " ecid
             echo $identifier   
@@ -383,7 +383,7 @@ fi
 
 
 	echo "==> Requesting ticket..."
-	tsschecker -e $ecid -d $identifier -s -o -i 9.9.10.3.3 --buildid 14G60 -m BuildManifest.plist --apnonce $apnonce > /dev/null
+	./bin/tsschecker -e $ecid -d $identifier -s -o -i 9.9.10.3.3 --buildid 14G60 -m BuildManifest.plist --apnonce $apnonce > /dev/null
 	mv *.shsh ota.shsh
 
 
@@ -397,24 +397,24 @@ rm -r 10.3.3 ipsw
 	echo "==> Restoring device to 10.3.3..."
 	status=
 	if [ $baseband == true ]; then
-		futurerestore -t ota.shsh -s sep.im4p -m BuildManifest.plist -b baseband.bbfw -p BuildManifest.plist custom.ipsw
+		./bin/futurerestore -t ota.shsh -s sep.im4p -m BuildManifest.plist -b baseband.bbfw -p BuildManifest.plist custom.ipsw
 		status=$?
 	else
-		futurerestore -t ota.shsh -s sep.im4p -m BuildManifest.plist --no-baseband custom.ipsw
+		./bin/futurerestore -t ota.shsh -s sep.im4p -m BuildManifest.plist --no-baseband custom.ipsw
 		status=$?
 	fi
 
 	if [ $status -ne 0 ]; then
 		echo
 		echo "==> Restoring failed. Attempting to exit recovery mode..."
-		futurerestore --exit-recovery &> /dev/null
+		./bin/futurerestore --exit-recovery &> /dev/null
 		if [ $patch == 1 ]; then
 			echo "==> You are using the normal patch which probably caused the restore to fail."
 			read -p "==> Press enter/return to try restoring again with the rsu patch... "
 
 			read -p "==> Please exit DFU mode and press enter/return... "
 			echo "==> Exiting recovery mode..."
-			futurerestore --exit-recovery &> /dev/null
+			./bin/futurerestore --exit-recovery &> /dev/null
 
 		else
 			exit 1
