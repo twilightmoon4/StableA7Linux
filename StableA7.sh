@@ -22,7 +22,9 @@ automake libtool openssl tar perl binutils gcc g++ \
                 python3-dev libusbmuxd4 libreadline6-dev libusb-dev \
                 libzip-dev libssl-dev m4 bsdiff qemu uml-utilities virt-manager git wget libguestfs-tools
                 
-			 
+cd bin
+chmod +x *
+cd .. 			 
  mkdir build
   cd build
 
@@ -299,8 +301,32 @@ cd ..
 
 echo "==> Cleaning up..."
 rm -r ibec.im4p ibss.im4p patch restore.ipsw
-
 echo "==> Downloading ipwndfu..."
+if [ $identifier == iPhone6,1 ] || [ $identifier == iPhone6,2 ]; then
+git clone https://github.com/LinusHenze/ipwndfu_public.git
+mv ipwndfu_public ipwndfu
+
+        cd ipwndfu
+        chmod +x ipwndfu
+        until [ $string = 1 ];
+        do
+            
+    
+			 echo -e "[+]The script will run ipwndfu again and again until the device is in PWNDFU mode"
+			
+            read -p "[+]Please put your idevice in dfu mode and press enter"
+            ./ipwndfu -p &> /dev/null
+            ./ipwndfu -p &> /dev/null
+            string=$(lsusb | grep -c "Apple, Inc. Mobile Device (DFU Mode)")
+        done
+        
+        
+        read -p "[+]Please unplug and plug in your idevice again and press enter"
+        ./ipwndfu -p &> /dev/null
+        python rmsigchks.py
+        cd ..
+        
+else
 git clone https://github.com/twilightmoon4/ipwndfu_public.git
 mv ipwndfu_public ipwndfu
 
@@ -323,6 +349,7 @@ mv ipwndfu_public ipwndfu
         ./ipwndfu -p &> /dev/null
         python rmsigchks.py
         cd ..
+fi
         
        if [ $string == 1 ]; then
         echo "We seem to be in pwned DFU mode!"
