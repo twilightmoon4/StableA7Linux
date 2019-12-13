@@ -325,6 +325,10 @@ mv ipwndfu_public ipwndfu
         ./ipwndfu -p &> /dev/null
         python rmsigchks.py
         cd ..
+if [ $string == 1 ]; then
+        echo "We seem to be in pwned DFU mode!"
+
+       fi
         
 else
 git clone https://github.com/twilightmoon4/ipwndfu_public.git
@@ -349,12 +353,13 @@ mv ipwndfu_public ipwndfu
         ./ipwndfu -p &> /dev/null
         python rmsigchks.py
         cd ..
-fi
-        
-       if [ $string == 1 ]; then
+if [ $string == 1 ]; then
         echo "We seem to be in pwned DFU mode!"
 
        fi
+fi
+        
+       
 
 	echo "==> Sending patched iBSS/iBEC to device..."
          sudo ip tuntap add dev tap0 mode tap
