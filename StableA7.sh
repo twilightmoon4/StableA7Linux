@@ -141,7 +141,7 @@ echo -e "==> Grabbing dependencies and installing!"
                            rmdir img4tool
                            git clone https://github.com/s0uthwest/idevicerestore.git
                            git clone https://github.com/s0uthwest/tsschecker.git
-                           git clone https://github.com/s0uthwest/img4tool.git
+                           git clone https://github.com/tihmstar/img4tool.git
                            cd tsschecker
                            cd external
                         rmdir jssy
