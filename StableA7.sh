@@ -6,7 +6,9 @@ if [ -e "build" ]; then
 echo "[+] Build folder exists! If the script doesn't work please delete the 'Build' folder and run it again"
           
 else	
+sudo apt-get --fix-broken install
 sudo apt-get update
+sudo apt-get --fix-broken install
 sudo apt-get build-dep
 sudo apt-get install -y git build-essential make autoconf \
 automake libtool openssl tar perl binutils gcc g++ \
@@ -187,6 +189,7 @@ wget -O support.deb http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/multiarch
 wget -O libssl.deb http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u12_amd64.deb -q --show-progress
 sudo dpkg -i support.deb
 sudo dpkg -i libssl.deb
+sudo apt-get --fix-broken install
                             cd ..
 sudo apt-get install libcurl4-openssl-dev
 pip install pyusb
