@@ -192,6 +192,7 @@ sudo dpkg -i libssl.deb
 sudo apt-get --fix-broken install
                             cd ..
 sudo apt-get install libcurl4-openssl-dev
+sudo ln -s libzip.so /usr/lib/x86_64-linux-gnu/libzip.so.2
 pip install pyusb
 pip3 install pyusb
 sudo ldconfig
